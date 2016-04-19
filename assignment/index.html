@@ -11,18 +11,74 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-              <h1>Railway and Metro Stations in Tokyo</h1>
-          </div>
-        </div>
-      </nav>
-      <div class="container-fluid">
-      </div>
+    <!-- Floating panel -->
+    <div id="control-panel" class="module">
+        <h1>TOKYO URBAN INDICATORS</h1>
+        <h2>TRAIN STATIONS AND FREE WIFI</h2>
+        <h3>(Work in Progress)</h3>
+        <h3>Hover on a town or station for information.</h3>
+        <h3>Click a town to filter data.</h3>
+        
+        <ul class="categories">
+
+            <li class="category">
+                <ul class="layers">
+                    <li class="layer">
+                        <div id="place" class="btn-group" data-toggle="buttons">
+                          <label class="btn btn-success active">
+                            <input id="chk-japan" type="checkbox" checked autocomplete="off"> Japan
+                          </label>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="category">
+                <ul class="layers">
+                    <li class="layer">
+                        <div class="btn-group" data-toggle="buttons">
+                          <label class="btn btn-primary active">
+                            <input id="chk-metro" type="checkbox" checked autocomplete="off"> Metro
+                          </label>
+                          <label class="btn btn-primary active">
+                            <input id="chk-jr" type="checkbox" autocomplete="off"> JR
+                          </label>
+                          <label class="btn btn-primary active">
+                            <input id="chk-pr" type="checkbox" autocomplete="off"> Private
+                          </label>
+                        </div>
+                    </li>
+                    <li class="layer">
+                        <div id="num-stations" class="statistics">
+                            <p class="number">13<span class="facility-label">stations</span></p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="category">
+                <ul class="layers">
+                    <li class="layer">
+                        <div class="btn-group" data-toggle="buttons">
+                          <label class="btn btn-info active">
+                            <input id="chk-wifi" type="checkbox" checked autocomplete="off"> Wifi
+                          </label>
+                        </div>
+                    </li>
+
+                    <li class="layer">
+                        <div id="num-wifi" class="statistics">
+                            <p  class="number">52<span class="facility-label">free wifi spots</span></p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
     </div>
+
+
+
     <!-- Map -->
     <div id="map" class="map"></div>
     <!-- Javascript Imports -->

@@ -1,12 +1,44 @@
+// Some sql request funtions
+// No jQuery in this file
+
 function selectStationsInTown(layer,townName){
-    var sub_metro = layer.getSubLayer(3);
-    var sub_jr = layer.getSubLayer(2);
-    var sub_pr_tram = layer.getSubLayer(1);
-    var sub_tokyo = layer.getSubLayer(0);
-    console.log(townName);
-    // sub_metro.set({'sql': 'SELECT * FROM mlit_metro_sta WHERE ST_contains((SELECT the_geom FROM jpn_adm_town where "nl_name_2" = '+ townName +'),public."mlit_metro_sta".the_geom)'});
+    var sub_allStations = layer.getSubLayer(2);
+    sql = generateSelectSql('japan_sub_jr_pr', 'jpn_adm_town', 'nl_name_2', townName);
+    console.log(sql);
+    sub_allStations.set({'sql':sql});
 }
 
-function removeCartoDBSubLayer(layer){
+function selectStationsInTokyo(layer){
+    var sub_allStations = layer.getSubLayer(2);
+    sql = generateSelectSql('japan_sub_jr_pr', 'jpn_adm_prefecture', 'name_1', 'Tokyo');
+    console.log(sql);
+    sub_allStations.set({'sql':sql});
+}
 
+function selectWifiInTown(layer,townName){
+    var sub_wifi = layer.getSubLayer(1);
+    sql = generateSelectSql('jta_free_wifi',  'jpn_adm_town', 'nl_name_2', townName);
+    console.log(sql);
+    sub_wifi.set({'sql':sql});
+}
+
+function selectWifiInTokyo(layer){
+    var sub_wifi = layer.getSubLayer(1);
+    sql = generateSelectSql('jta_free_wifi',  'jpn_adm_prefecture', 'name_1', 'Tokyo');
+    console.log(sql);
+    sub_wifi.set({'sql':sql});
+}
+
+function generateSelectSql(from1,from2,sharedColumnName,itemName){
+    // generate sql in the following format
+    // 'SELECT * FROM from1 WHERE ST_contains((SELECT the_geom FROM from2 WHERE "sharedColumnName" ILIKE \'%itemName%\'),public."from1".the_geom)'
+    sql = 'SELECT * FROM '+ from1 +' WHERE ST_contains((SELECT the_geom FROM '+ from2 +' WHERE "'+ sharedColumnName +'" ILIKE \'%'+ itemName +'%\'),public."'+from1+'".the_geom)';
+    return sql;
+}
+
+function generateCountSql(from1,from2,sharedColumnName,itemName){
+    // generate sql in the following format
+    // 'SELECT COUNT(*) FROM from1 WHERE ST_contains((SELECT the_geom FROM from2 WHERE "sharedColumnName" ILIKE \'%itemName%\'),public."from1".the_geom)'
+    sql = 'SELECT COUNT(*) FROM '+ from1 +' WHERE ST_contains((SELECT the_geom FROM '+ from2 +' WHERE "'+ sharedColumnName +'" ILIKE \'%'+ itemName +'%\'),public."'+from1+'".the_geom)';
+    return sql;
 }
